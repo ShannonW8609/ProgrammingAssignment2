@@ -100,6 +100,37 @@ In order to complete this assignment, you must do the following:
 5.  Submit to Coursera the URL to your GitHub repository that contains
     the completed R code for the assignment.
 
+makeCacheMatrix <- function(x = matrix()) {
+  inv <- NULL  # Initialize the inverse property as NULL
+  set <- function(y) {
+    x <<- y
+    inv <<- NULL  # Reset the inverse when the matrix is changed
+  }
+  get <- function() {
+    x
+  }
+  setInverse <- function(inverse) {
+    inv <<- inverse
+  }
+  getInverse <- function() {
+    inv
+  }
+  list(set = set, get = get, setInverse = setInverse, getInverse = getInverse)
+}
+
+cacheSolve <- function(x, ...) {
+  inv <- x$getInverse()    
+  if (!is.null(inv)) {
+    message("Getting cached data")
+    return(inv)
+  }
+  data <- x$get()  # Get the matrix
+  inv <- solve(data, ...)  
+  x$setInverse(inv)  
+  inv  
+  }
+
+
 ### Grading
 
 This assignment will be graded via peer assessment.
